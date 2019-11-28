@@ -1,4 +1,4 @@
-<div class="main">
+<div class="content">
 	<div style='text-align:center;margin-top: 100px;'>
 		<h2>Hola Bienvenido a <?php echo self::APP; ?> </h2>
 	</div>

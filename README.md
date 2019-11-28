@@ -1,4 +1,1 @@
-<h1>ObjectMVCX 0.009</h1>
-<p>Intento de crear un Framework MVC PHP AJAX </p>
-"# Cartera" 
-"# Cartera" 
+<h1>Aplicacion Web para Aministrar mis Cuentas Personales</h1>
