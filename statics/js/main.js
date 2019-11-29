@@ -43,5 +43,58 @@ $(document).ready(function(){
     });
 
 
+     // Eventos Formulario General
+
+     $(".formAjax").submit(function(e){
+        e.preventDefault();
+        const form = $(this);
+        const accion= form.attr('action');
+        const metodo= form.attr('method');
+        //const respuesta = $('.RespuestaAjax');
+        const lista = $('.CuadroListas');
+        //const enctype = form.attr('enctype');
+        const mensaje = $(".formAjax input[name=mensaje]")[0].value;
+        const msjerror = "<script>Swal.fire({title:'Ocurrio un error inesperado',text:'Por Favor recargue la pagina',icon:'error',confirmButtonText: 'Ok'});</script>";
+        const formdata=new FormData(this);
+        
+
+        swal.fire({
+            title:"Estas Seguro",
+            text:mensaje,
+            icon:"question",
+            showCancelButton:true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText:"Aceptar",
+            cancelButtonText:"Cancelar"
+        }).then((result)=>{
+
+            if(result.value){
+
+                $.ajax({
+                    type: metodo,
+                    data: formdata?formdata:form.serialize(),
+                    url: accion,
+                    cache: false,
+                    contentType: false,
+                    dataType: "json",
+                    processData: false,
+                    beforeSend: function () {
+                        //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
+                    },
+                    success: function (response) {
+                        var res = response;
+                        console.log(res.mensaje)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //debugger;
+                        //alert(textStatus, errorThrown, jqXHR);
+                    }
+                });
+            }
+            
+        });
+        return false;
+    });
 
 });

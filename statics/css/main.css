@@ -26,6 +26,7 @@ body {
 div.main{
     height:calc(100vh);
     width:100%;
+    padding: 80px 30px;
 }
 
 /* menu */
@@ -577,4 +578,9 @@ fieldset{
 }
 .login-title h1{
 	text-align:center;
+}
+
+.CuadroListas{
+  border: 1px solid grey;
+  height:calc(90vh);
 }
