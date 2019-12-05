@@ -23,7 +23,8 @@ class Config{
     const CONTROLLER_PATH = './controllers/';
     const MODEL_PATH = './models/';
     const VIEW_PATH = './views/';
-    
+    const LIST_PATH = './views/lists/';
+
     public function __construct(){
         date_default_timezone_set('America/Santiago');
         

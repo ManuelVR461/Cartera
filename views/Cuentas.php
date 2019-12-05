@@ -2,7 +2,7 @@
 <div class="content">
 	<div class="row">
 		<div class="col-md-4">
-			<form action='Cuentas/listarCuentas' method="POST" class="formAjax" autocomplete="off" enctype="text/html; charset=utf-8">
+			<form action='Cuentas/listarCuentas' method="POST" class="formAjax" autocomplete="off">
 				<div class="form-group">
 					<label for="cuenta" >Nombre de Cuenta</label>
 					<input class="form-control" type="text" name="txtcuenta" id="cuenta" placeholder="Ej. Cartera">

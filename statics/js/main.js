@@ -55,8 +55,7 @@ $(document).ready(function(){
         //const enctype = form.attr('enctype');
         const mensaje = $(".formAjax input[name=mensaje]")[0].value;
         const msjerror = "<script>Swal.fire({title:'Ocurrio un error inesperado',text:'Por Favor recargue la pagina',icon:'error',confirmButtonText: 'Ok'});</script>";
-        const formdata=new FormData(this);
-        
+        const formdata = new FormData(this);
 
         swal.fire({
             title:"Estas Seguro",
@@ -71,20 +70,37 @@ $(document).ready(function(){
 
             if(result.value){
 
+                // fetch(accion,{
+                //     method:metodo,
+                //     body:formdata
+                // }).then(function(response){
+                //     if(response.OK){
+                //         return response.json();
+                //     }else{
+                //         throw "Error en la consulta"
+                //     }
+                // }).then(function(texto){
+                //     lista.html(texto);
+                //     console.log(texto);
+                // }).catch(function(error){
+                //     console.log(error)
+                // })
+
+
+
                 $.ajax({
                     type: metodo,
                     data: formdata?formdata:form.serialize(),
                     url: accion,
                     cache: false,
                     contentType: false,
-                    dataType: "json",
                     processData: false,
                     beforeSend: function () {
                         //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
                     },
                     success: function (response) {
                         var res = response;
-                        console.log(res.mensaje)
+                        lista.html(response);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         //debugger;
