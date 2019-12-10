@@ -56,6 +56,7 @@ $(document).ready(function(){
         const mensaje = $(".formAjax input[name=mensaje]")[0].value;
         const msjerror = "<script>Swal.fire({title:'Ocurrio un error inesperado',text:'Por Favor recargue la pagina',icon:'error',confirmButtonText: 'Ok'});</script>";
         const formdata = new FormData(this);
+        formdata.append('controller', form.attr('action').split("/")[0]);
 
         swal.fire({
             title:"Estas Seguro",
@@ -112,5 +113,34 @@ $(document).ready(function(){
         });
         return false;
     });
+
+    //////dashboard//////
+
+    window.setInterval(function () {
+        updateStats();
+    }, 66000);
+
+    function updateStats() {
+        usuariosConectados();
+        arqueosImpresos();
+    }
+    
+
+    function usuariosConectados() {
+        jQuery.get(
+            './views/templates/usersConnected.php',
+            function (data) {
+                $('#connected_users').text(data);
+            }
+        );
+    }
+    function arqueosImpresos() {
+        jQuery.get(
+            './views/templates/arqueosPrinted.php',
+            function (data) {
+                $('#daily_revenue').text(data);
+            }
+        );
+    }
 
 });

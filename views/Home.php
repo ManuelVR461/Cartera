@@ -7,3 +7,23 @@
 		<img src='./statics/images/icon3.png' width="300px">
 	</div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    Usuarios conectados en este momento: <strong><span id="connected_users">0</span></strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    Facturación del día: <strong>$ <span id="daily_revenue">0.00</span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -2,9 +2,9 @@
 
 class View extends Config{
 
-    private $controller;
-    private $method;
-    private $params;
+    protected $controller;
+    protected $method;
+    protected $params;
 
     public function __construct($controller="Home",$method=null){
         $this->controller=$controller;
@@ -22,6 +22,7 @@ class View extends Config{
             require_once( self::VIEW_PATH.'templates/nav-vert.php');
         }
 
+        
 
         if(file_exists(self::VIEW_PATH.$view.'.php')){
             
@@ -33,11 +34,10 @@ class View extends Config{
                     }else{
                         echo "<br><br><br><h1>Error no existe el metodo</h1>";
                     }
+                }else{
+                    require_once( self::VIEW_PATH.$view.'.php');
                 }
-
             }
-
-            require_once( self::VIEW_PATH.$view.'.php');
         }else{
             require_once( self::VIEW_PATH.'404.php');
         }
@@ -45,9 +45,22 @@ class View extends Config{
         require_once( self::VIEW_PATH.'templates/footer.php');
     }
 
-    public function getNameController(){
-        return $this->controller;
+    public function viewList(){
+        if(file_exists(self::LIST_PATH.$this->controller.'List.php')){
+            $uri_list = self::LIST_PATH.$this->controller."List.php";
+            if(is_file($uri_list)){
+                ob_start();
+                include $uri_list;
+                $table = ob_get_clean();
+            }
+            return $table;
+        }else{
+            return "<h1>No Existe una Lista Asociada a este controlador!</h1>";
+        }
     }
 
-    public function __destruct(){}
+    public function __get( string $var ){
+        return $this->$var;
+    }
+
 }
