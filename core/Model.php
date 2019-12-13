@@ -54,4 +54,34 @@ class Model extends Config {
         $output=openssl_decrypt(base64_decode($string), parent::METHOD, $key, 0, $iv);
         return $output;
     }
+
+    /** Ejecuta una consulta y devuelve el resultado.
+	* @param String $sql		Texto de la consulta.
+	* @param String $dataBase	Nombre de la Base de datos a la cual se conectará, por defecto es la indicada en
+	* @return Array $result
+	*
+	*/
+	public static function query($sql){
+        $ti = microtime(true);
+        $this->sql = $sql;
+        $res = $this->cnx->prepare($this->sql);
+        $res->execute();
+		$tf = microtime(true);
+		self::_log($ti,$tf,$sql,$r);
+		return $res;
+    }
+    
+    /**
+	* Graba log con datos de tiempo de ejecución de consulta
+	* @param string	$consulta	sentencia SQL ejecutada
+	* @param arry	$resultado	resultado de la sentencia ejecutada
+	* @param int	$ti			tiempo en microsegundos antes de ejecutar la consulta
+	* @param int	$tf			tiempo en microsegundos después de ejecutar la consulta
+	*/
+	private static function _log($ti=0,$tf=0,$consulta='',$resultado=null){
+		$sep = '||';
+		$str = self::$_host.$sep.round($tf-$ti,2).$sep.$consulta.$sep.json_encode($resultado);
+		dbg($str,'debug_db_'.date('Ymd').'.log',DEBUG_DB);
+    }
+    
 }

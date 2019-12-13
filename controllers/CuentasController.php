@@ -10,7 +10,7 @@ class CuentasController extends Controller {
         if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
             $datos = array("cuenta"=>$_POST['txtcuenta'],"saldo"=>$_POST['txtsaldo'],"mensaje"=>$_POST['mensaje']);
-
+            
             if( $datos != null ){
                 $lista = View::viewlist($_POST['controller'],$datos);
                 echo $lista;
