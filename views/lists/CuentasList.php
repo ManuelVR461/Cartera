@@ -1,7 +1,6 @@
 <?php
-    //$cuentas = new CuentasController;
-    //$cuentas->listarCuentas();  
     print_r($datos);
+    
 ?>
 <div class="table-responsive">
 <caption>Lista de Cuentas</caption>

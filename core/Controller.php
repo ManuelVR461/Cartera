@@ -1,7 +1,6 @@
   
 <?php
 class Controller extends Config{
-    
     public function __construct(){
         parent::__construct();
     }
@@ -17,4 +16,8 @@ class Controller extends Config{
         return "nombre del controller";
     }
     
+    function is_post(){
+        return ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST) && !empty($_POST));
+    }
+
 }

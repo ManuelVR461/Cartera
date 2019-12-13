@@ -22,8 +22,6 @@ class View extends Config{
             require_once( self::VIEW_PATH.'templates/nav-vert.php');
         }
 
-        
-
         if(file_exists(self::VIEW_PATH.$view.'.php')){
             
             if(file_exists(self::CONTROLLER_PATH.$controller.'.php')){
@@ -45,9 +43,9 @@ class View extends Config{
         require_once( self::VIEW_PATH.'templates/footer.php');
     }
 
-    public function viewList(){
-        if(file_exists(self::LIST_PATH.$this->controller.'List.php')){
-            $uri_list = self::LIST_PATH.$this->controller."List.php";
+    public function viewList($control_list,$datos=array()){
+        if(file_exists(self::LIST_PATH.$control_list.'List.php')){
+            $uri_list = self::LIST_PATH.$control_list."List.php";
             if(is_file($uri_list)){
                 ob_start();
                 include $uri_list;

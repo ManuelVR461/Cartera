@@ -2,17 +2,17 @@
 
 class CuentasController extends Controller {
     public function __construct(){
-        $cuentas = new CuentasModel;
+        parent::__construct();
+        $cuentasModel = new CuentasModel;
     }
 
     public function listarCuentas(){
-        if($_POST){
-            
+        if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
-
             $datos = array("cuenta"=>$_POST['txtcuenta'],"saldo"=>$_POST['txtsaldo'],"mensaje"=>$_POST['mensaje']);
+
             if( $datos != null ){
-                $lista = View::viewlist($_POST['controller']);
+                $lista = View::viewlist($_POST['controller'],$datos);
                 echo $lista;
             }else{ 
                 return 'No existen registros'; 
@@ -23,4 +23,5 @@ class CuentasController extends Controller {
         }
         
     }
+
 }

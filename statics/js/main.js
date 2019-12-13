@@ -71,24 +71,6 @@ $(document).ready(function(){
 
             if(result.value){
 
-                // fetch(accion,{
-                //     method:metodo,
-                //     body:formdata
-                // }).then(function(response){
-                //     if(response.OK){
-                //         return response.json();
-                //     }else{
-                //         throw "Error en la consulta"
-                //     }
-                // }).then(function(texto){
-                //     lista.html(texto);
-                //     console.log(texto);
-                // }).catch(function(error){
-                //     console.log(error)
-                // })
-
-
-
                 $.ajax({
                     type: metodo,
                     data: formdata?formdata:form.serialize(),
@@ -134,6 +116,7 @@ $(document).ready(function(){
             }
         );
     }
+
     function arqueosImpresos() {
         jQuery.get(
             './views/templates/arqueosPrinted.php',
@@ -141,6 +124,30 @@ $(document).ready(function(){
                 $('#daily_revenue').text(data);
             }
         );
+    }
+
+    //Funciones Generales
+
+    function dbg(a, b, c) {
+        if (0 < (void 0 == c ? 1 : c) && a) {
+            var d = null,
+                d = [];
+            c = "json";
+            b = void 0 == b ? "debug_js" : b;
+            if (a instanceof Array) d = a.toJSON();
+            else if (a instanceof Object)
+                if ("" == Object.values(a)) {
+                    var f = a.length;
+                    for (i = 0; i < f; i++) d[i] = a[i];
+                    d = d.toJSON()
+                } else d = Object.toJSON(a);
+            else d = a.toString(), c = "string";
+
+            var xhr=new XMLHttpRequest();
+            xhr.open("POST", "core/debug.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("data=" + encodeURIComponent(d) + "&tipo=" + c + "&archivo=" + b);
+        }
     }
 
 });
