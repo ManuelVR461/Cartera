@@ -55,20 +55,22 @@ class Model extends Config {
         return $output;
     }
 
-    /** Ejecuta una consulta y devuelve el resultado.
+    /** Ejecuta una consulta y devuelve un resultado.
 	* @param String $sql		Texto de la consulta.
 	* @param String $dataBase	Nombre de la Base de datos a la cual se conectará, por defecto es la indicada en
 	* @return Array $result
 	*
 	*/
-	public static function query($sql){
+	public function select($sql,$where = array()){
         $ti = microtime(true);
-        $this->sql = $sql;
-        $res = $this->cnx->prepare($this->sql);
-        $res->execute();
+        $res = $this->cnx->prepare($sql);
+        $res->execute($where);
+        $row = $res->fetch(PDO::FETCH_ASSOC);
+        $res->closeCursor();
+        $this->cnx = NULL;
 		$tf = microtime(true);
-		self::_log($ti,$tf,$sql,$r);
-		return $res;
+		self::_log($ti,$tf,$sql,$row);
+		return $row;
     }
     
     /**

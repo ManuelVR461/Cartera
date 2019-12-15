@@ -5,12 +5,14 @@ class CuentasModel extends Model{
         parent::__construct();
     }
 
-    public function setCuenta(){
-        $sql = "SELECT "
-        $row = $res->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
     public function getCuentas(){
+        $sql = "SELECT * FROM cuentas WHERE 1";
+        return $this->select($sql);
+    }
+
+
+    
+    public function setCuentas(){
         
     }
 }

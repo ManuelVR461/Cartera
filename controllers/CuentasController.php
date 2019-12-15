@@ -9,8 +9,7 @@ class CuentasController extends Controller {
     public function listarCuentas(){
         if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
-            $datos = array("cuenta"=>$_POST['txtcuenta'],"saldo"=>$_POST['txtsaldo'],"mensaje"=>$_POST['mensaje']);
-            
+            $datos = $cuentasModel->getCuentas();
             if( $datos != null ){
                 $lista = View::viewlist($_POST['controller'],$datos);
                 echo $lista;
@@ -22,6 +21,12 @@ class CuentasController extends Controller {
             return false;
         }
         
+    }
+
+    public function crearCuentas(){
+        if($this->is_post()){
+            
+        }
     }
 
 }

@@ -45,54 +45,52 @@ $(document).ready(function(){
 
      // Eventos Formulario General
 
-     $(".formAjax").submit(function(e){
+     $("#btnGuardar").click(function(e){
         e.preventDefault();
-        const form = $(this);
+        const form = $(".formAjax");
         const accion= form.attr('action');
         const metodo= form.attr('method');
-        //const respuesta = $('.RespuestaAjax');
         const lista = $('.CuadroListas');
-        //const enctype = form.attr('enctype');
         const mensaje = $(".formAjax input[name=mensaje]")[0].value;
-        const msjerror = "<script>Swal.fire({title:'Ocurrio un error inesperado',text:'Por Favor recargue la pagina',icon:'error',confirmButtonText: 'Ok'});</script>";
-        const formdata = new FormData(this);
-        formdata.append('controller', form.attr('action').split("/")[0]);
+        const formdata = new FormData(form[0]);
+        console.log(formdata);
+        // formdata.append('controller', form.attr('action').split("/")[0]);
 
-        swal.fire({
-            title:"Estas Seguro",
-            text:mensaje,
-            icon:"question",
-            showCancelButton:true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText:"Aceptar",
-            cancelButtonText:"Cancelar"
-        }).then((result)=>{
+        // swal.fire({
+        //     title:"Estas Seguro",
+        //     text:mensaje,
+        //     icon:"question",
+        //     showCancelButton:true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText:"Aceptar",
+        //     cancelButtonText:"Cancelar"
+        // }).then((result)=>{
 
-            if(result.value){
+        //     if(result.value){
 
-                $.ajax({
-                    type: metodo,
-                    data: formdata?formdata:form.serialize(),
-                    url: accion,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function () {
-                        //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
-                    },
-                    success: function (response) {
-                        var res = response;
-                        lista.html(response);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //debugger;
-                        //alert(textStatus, errorThrown, jqXHR);
-                    }
-                });
-            }
+        //         $.ajax({
+        //             type: metodo,
+        //             data: formdata?formdata:form.serialize(),
+        //             url: accion,
+        //             cache: false,
+        //             contentType: false,
+        //             processData: false,
+        //             beforeSend: function () {
+        //                 //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
+        //             },
+        //             success: function (response) {
+        //                 var res = response;
+        //                 lista.html(response);
+        //             },
+        //             error: function (jqXHR, textStatus, errorThrown) {
+        //                 //debugger;
+        //                 //alert(textStatus, errorThrown, jqXHR);
+        //             }
+        //         });
+        //     }
             
-        });
+        // });
         return false;
     });
 

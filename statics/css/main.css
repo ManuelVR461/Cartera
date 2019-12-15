@@ -584,3 +584,16 @@ fieldset{
   border: 1px solid grey;
   height:calc(90vh);
 }
+
+/* formularios template */
+.form-content{
+  margin-bottom: 10px;
+}
+
+.header-list{
+  background: #5442a8;
+  padding: 5px;
+}
+.btn-list{
+  font-size: 12px;
+}
