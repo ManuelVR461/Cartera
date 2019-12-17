@@ -21,9 +21,7 @@ class View extends Config{
             require_once( self::VIEW_PATH.'templates/nav-hor.php');
             require_once( self::VIEW_PATH.'templates/nav-vert.php');
         }
-
         if(file_exists(self::VIEW_PATH.$view.'.php')){
-            
             if(file_exists(self::CONTROLLER_PATH.$controller.'.php')){
                 $ViewController = new $controller;
                 if(isset($this->method)){
@@ -35,6 +33,8 @@ class View extends Config{
                 }else{
                     require_once( self::VIEW_PATH.$view.'.php');
                 }
+            }else{
+                require_once( self::VIEW_PATH.$view.'.php');
             }
         }else{
             require_once( self::VIEW_PATH.'404.php');

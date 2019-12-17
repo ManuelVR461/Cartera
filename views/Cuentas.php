@@ -11,14 +11,16 @@
 					<label for="saldo" >Saldo Inicial</label>
 					<input class="form-control text-right" type="text" name="txtsaldo" id="saldo" placeholder="0.0">
 				</div>
-				<button class="btn btn-primary float-right" id="btnGuardar" type="button" data-action="Cuentas/crearCuentas">Guardar</button>
+				<button class="btn btn-primary float-right" name="btn" data-action="Cuentas/crearCuentas" type="button" >Guardar</button>
 				<input type="hidden" name="mensaje" value="Se va a agregar una Cuenta nueva">
 			</form>
 		</div>
 		<div class="col-md-8">
 			<div class="row header-list">
 				<div class="col-12">
-					<button class="btn btn-success btn-list float-right" type="submit">Ver Lista</button>
+					<form method="POST" class="listAjax" autocomplete="off">
+						<button class="btn btn-success btn-list float-right" name="btn" data-action="Cuentas/listarCuentas" type="button">Ver Lista</button>
+					</form>
 				</div>
 				
 			</div>
