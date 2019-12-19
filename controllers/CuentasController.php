@@ -7,6 +7,7 @@ class CuentasController extends Controller {
     }
 
     public function listarCuentas(){
+        echo "entreee";
         if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
             $datos = $cuentasModel->getCuentas();

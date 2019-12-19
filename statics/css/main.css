@@ -26,7 +26,7 @@ body {
 div.main{
     height:calc(100vh);
     width:100%;
-    padding: 80px 30px;
+    padding: 70px 30px;
 }
 
 /* menu */
@@ -142,6 +142,7 @@ div.main{
   position: relative;
   height: 100%;
   -webkit-overflow-scrolling: touch;
+  background: #606468;
 }
 
 .drawer-toggle {
@@ -583,17 +584,22 @@ fieldset{
 .CuadroListas{
   border: 1px solid grey;
   height:calc(90vh);
+  background: #FFF;
 }
 
 /* formularios template */
 .form-content{
   margin-bottom: 10px;
+  background: #EFEFEF;
+  padding-top: 10px;
 }
 
 .header-list{
-  background: #5442a8;
+  background: #EFEFEF;
   padding: 5px;
+  margin-bottom: 1px;
 }
 .btn-list{
   font-size: 12px;
+  max-height: 28px;
 }

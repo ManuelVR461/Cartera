@@ -1,7 +1,6 @@
 'use strict'
 
 $(document).ready(function(){
-
     $('.menu > ul > li > a').click(function(e) {        
         e.preventDefault();
         const element = $(this).next();
@@ -20,7 +19,6 @@ $(document).ready(function(){
     });
 
     $('.menu > ul > li > ul > li > a').click(function() {
-        
         var element = $(this).next();
         $('.menu ul ul li').removeClass('activado');
         $(this).closest('ul ul li').addClass('activado');
@@ -42,26 +40,27 @@ $(document).ready(function(){
         }
     });
 
-    $(".btn").click(function(){
-        alert($(this).data('action'));
-        $(".formAjax").prop("action",$(this).data('action'));
-        //$(".formAjax").submit();
-    });
+    function AjaxParams(){
+        this.accion='';
+        this.metodo='POST';
+        this.form='';
+        //this.lista = $('.CuadroListas');
+        this.dat='';
+    }
 
-     // Eventos Formulario General
-
-     $(".formAjax").submit(function(e){
+    $('button[name$="-form"]').click(function(e){
         e.preventDefault();
-        const form = $(this);
-        //const accion = document.getElementsByClassName("btn").dataset("action");
-        const accion= form.attr('action');
-        const metodo= form.attr('method');
-        const lista = $('.CuadroListas');
-        const mensaje = $(".formAjax input[name=mensaje]")[0].value;
-        const msjerror = "<script>Swal.fire({title:'Ocurrio un error inesperado',text:'Por Favor recargue la pagina',icon:'error',confirmButtonText: 'Ok'});</script>";
-        const formdata = new FormData(this);
-        //formdata.append('controller', form.attr('action').split("/")[0]);
+        let params = new AjaxParams;
 
+        params.accion = $(this).data('action');        
+        params.form = $(this).parent('form');
+        params.metodo= form.attr('method');
+        
+        let formdata = new FormData(params.form[0]);
+        formdata.append('controller', params.accion.split("/")[0]);
+        params.dat = formdata?formdata:params.form.serialize();
+
+        
         swal.fire({
             title:"Estas Seguro",
             text:mensaje,
@@ -72,35 +71,47 @@ $(document).ready(function(){
             confirmButtonText:"Aceptar",
             cancelButtonText:"Cancelar"
         }).then((result)=>{
-
             if(result.value){
-
-                $.ajax({
-                    type: metodo,
-                    data: formdata?formdata:form.serialize(),
-                    url: accion,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function () {
-                        //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
-                    },
-                    success: function (response) {
-                        var res = response;
-                        lista.html(response);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //debugger;
-                        //alert(textStatus, errorThrown, jqXHR);
-                    }
-                });
-            }
-            
+                EventAjax(params)
+            } 
         });
-
-        return false;
     });
 
+    $('button[name$="-list"]').click(function(e){
+        e.preventDefault();
+        let params = new AjaxParams;
+
+        params.accion= $(this).data('action');        
+        params.metodo= "POST";
+        params.dat = {controller:params.accion.split("/")[0]};
+
+        EventAjax(params);
+
+    });
+
+
+    function EventAjax(params){
+        console.log("params "+JSON.stringify(params));
+        // $.ajax({
+        //     type: params.metodo,
+        //     data: params.dat,
+        //     url: params.accion,
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     beforeSend: function () {
+        //         //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
+        //     },
+        //     success: function (response) {
+        //         params.lista.html(response);
+        //     },
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         //debugger;
+        //         //alert(textStatus, errorThrown, jqXHR);
+        //     }
+        // });
+    }
+    
     //////dashboard//////
 
     window.setInterval(function () {

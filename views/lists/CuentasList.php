@@ -1,6 +1,5 @@
 <?php
     print_r($datos);
-    
 ?>
 <div class="table-responsive">
 <caption>Lista de Cuentas</caption>

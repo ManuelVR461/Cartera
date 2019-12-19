@@ -6,8 +6,9 @@ class CuentasModel extends Model{
     }
 
     public function getCuentas(){
-        $sql = "SELECT * FROM cuentas WHERE 1";
-        return $this->select($sql);
+        return $data =array("cuenta"=>"prueba","saldo"=>5000);
+        //$sql = "SELECT * FROM cuentas WHERE 1";
+        //return $this->select($sql);
     }
 
 
