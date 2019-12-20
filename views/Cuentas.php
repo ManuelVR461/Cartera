@@ -10,8 +10,8 @@
 					<label for="saldo" >Saldo Inicial</label>
 					<input class="form-control text-right" type="text" name="txtsaldo" id="saldo" placeholder="0.0">
 				</div>
-				<button class="btn btn-primary float-right" name="btn-form" data-action="Cuentas/crearCuentas" type="button" >Guardar</button>
-				<input type="hidden" name="mensaje" value="Se va a agregar una Cuenta nueva">
+				<button class="btn btn-primary float-right" name="btn-form" data-action="Cuentas/crearCuentas" type="button">Guardar</button>
+				<input type="hidden" id="msg-Guardar" value="Se va a agregar una Cuenta Nueva">
 			</form>
 		</div>
 		<div class="col-md-9 content-list">

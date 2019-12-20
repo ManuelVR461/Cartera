@@ -1,8 +1,11 @@
   
 <?php
 class Controller extends Config{
+    protected $functions;
+
     public function __construct(){
         parent::__construct();
+        $this->functions = new Functions; 
     }
     
     public function __set( string $var, $val ){
@@ -17,6 +20,7 @@ class Controller extends Config{
     }
     
     function is_post(){
+        $this->functions->dbg("datos post ".json_encode($_SERVER["REQUEST_METHOD"]),"Controller.log");
         return ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST) && !empty($_POST));
     }
 

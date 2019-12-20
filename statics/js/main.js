@@ -44,26 +44,24 @@ $(document).ready(function(){
         this.accion='';
         this.metodo='POST';
         this.form='';
-        //this.lista = $('.CuadroListas');
+        this.mensaje='';
         this.dat='';
     }
 
     $('button[name$="-form"]').click(function(e){
         e.preventDefault();
         let params = new AjaxParams;
-
         params.accion = $(this).data('action');        
         params.form = $(this).parent('form');
-        params.metodo= form.attr('method');
-        
+        params.metodo= params.form.attr('method');
+        params.mensaje = $(this).siblings('#msg-'+$(this).text()).val();
         let formdata = new FormData(params.form[0]);
         formdata.append('controller', params.accion.split("/")[0]);
-        params.dat = formdata?formdata:params.form.serialize();
-
+        params.dat = params.form.serialize();
         
         swal.fire({
             title:"Estas Seguro",
-            text:mensaje,
+            text:params.mensaje,
             icon:"question",
             showCancelButton:true,
             confirmButtonColor: '#3085d6',
@@ -80,7 +78,6 @@ $(document).ready(function(){
     $('button[name$="-list"]').click(function(e){
         e.preventDefault();
         let params = new AjaxParams;
-
         params.accion= $(this).data('action');        
         params.metodo= "POST";
         params.dat = {controller:params.accion.split("/")[0]};
@@ -92,31 +89,31 @@ $(document).ready(function(){
 
     function EventAjax(params){
         console.log("params "+JSON.stringify(params));
-        // $.ajax({
-        //     type: params.metodo,
-        //     data: params.dat,
-        //     url: params.accion,
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false,
-        //     beforeSend: function () {
-        //         //lista.html("<center><br><br><img src='../scvfacilito/statics/images/cargando/cargando2.gif'><center>");
-        //     },
-        //     success: function (response) {
-        //         params.lista.html(response);
-        //     },
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         //debugger;
-        //         //alert(textStatus, errorThrown, jqXHR);
-        //     }
-        // });
+        $.ajax({
+            type: params.metodo,
+            data: params.dat,
+            url: params.accion,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $('.CuadroListas').html("<center><br><br><img src='../cartera/statics/images/cargando/cargando2.gif'><center>");
+            },
+            success: function (response) {
+                $('.CuadroListas').html(response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //debugger;
+                //alert(textStatus, errorThrown, jqXHR);
+            }
+        });
     }
     
     //////dashboard//////
 
-    window.setInterval(function () {
-        updateStats();
-    }, 66000);
+    //window.setInterval(function () {
+        //updateStats();
+    //}, 66000);
 
     function updateStats() {
         usuariosConectados();

@@ -1,6 +1,7 @@
 <?php
 
 class CuentasController extends Controller {
+
     public function __construct(){
         parent::__construct();
         $cuentasModel = new CuentasModel;
@@ -25,8 +26,9 @@ class CuentasController extends Controller {
     }
 
     public function crearCuentas(){
+        $this->functions->dbg("Datos en crear","CuentasController.log");
         if($this->is_post()){
-            
+            $this->functions->dbg("Datos en crear ".json_encode($_REQUEST),"CuentasController.log");
         }
     }
 

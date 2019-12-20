@@ -26,7 +26,9 @@ body {
 div.main{
     height:calc(100vh);
     width:100%;
-    padding: 70px 30px;
+    padding-top: 70px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 /* menu */
@@ -142,7 +144,7 @@ div.main{
   position: relative;
   height: 100%;
   -webkit-overflow-scrolling: touch;
-  background: #606468;
+  
 }
 
 .drawer-toggle {
@@ -488,10 +490,10 @@ border-right:1px solid #000;
   color:#fff;
   font-size:50px;
   line-height: 125px;
-  background-image: url("../images/scv.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  /* background-image: url("../images/scv.png"); */
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
+  /* background-size: cover; */
   background-color: #f4f4f4;
 
 }
@@ -574,7 +576,7 @@ fieldset{
 }
 .login-title{
 	position: absolute;
-	top: 200px;
+	top: 160px;
 	width: 100%;
 }
 .login-title h1{
@@ -583,7 +585,7 @@ fieldset{
 
 .CuadroListas{
   border: 1px solid grey;
-  height:calc(90vh);
+  height:calc(80vh);
   background: #FFF;
 }
 
@@ -591,7 +593,8 @@ fieldset{
 .form-content{
   margin-bottom: 10px;
   background: #EFEFEF;
-  padding-top: 10px;
+  padding-top: 15px;
+  margin-bottom: -2px;
 }
 
 .header-list{
