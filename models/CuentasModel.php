@@ -11,8 +11,6 @@ class CuentasModel extends Model{
         //return $this->select($sql);
     }
 
-
-    
     public function setCuentas(){
         
     }

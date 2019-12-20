@@ -3,8 +3,10 @@ class Router{
     public $router = array();
     public $controller;
     public $method;
+    public $via="nav";
 
     public function __construct(){
+        $functions = new Functions;
 
         $session_options= array('use_only_cookies'=>1,'read_and_close'=>true,'session.auto_start'=>1);
         if(!isset($_SESSION))  session_start($session_options);
@@ -17,6 +19,8 @@ class Router{
             $url = (isset($_GET['url']))?$_GET['url']:'Home';
             $this->router = explode('/',$url);
 
+            $functions->dbg("Router: ".json_encode($this->router),"Router");
+
             if(isset($this->router[0])){
                 $this->controller = $this->router[0];
             }
@@ -27,7 +31,15 @@ class Router{
                 }
             }
 
-            $views = new View($this->controller,$this->method);
+            if(isset($this->router[2])){
+                $functions->dbg("entreee: ".isset($this->router[2]),"Router");
+                if($this->router[2]!=''){
+                    $this->via = $this->router[2];
+                }
+            }
+
+            
+            $views = new View($this->controller,$this->method,$this->via);
 
             
             if($this->router[0] !='logout'){                

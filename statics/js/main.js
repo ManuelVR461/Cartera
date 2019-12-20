@@ -45,19 +45,19 @@ $(document).ready(function(){
         this.metodo='POST';
         this.form='';
         this.mensaje='';
-        this.dat='';
+        this.data='';
     }
 
     $('button[name$="-form"]').click(function(e){
         e.preventDefault();
         let params = new AjaxParams;
-        params.accion = $(this).data('action');        
+        params.accion = $(this).data('action')+"/ajax";        
         params.form = $(this).parent('form');
         params.metodo= params.form.attr('method');
         params.mensaje = $(this).siblings('#msg-'+$(this).text()).val();
         let formdata = new FormData(params.form[0]);
         formdata.append('controller', params.accion.split("/")[0]);
-        params.dat = params.form.serialize();
+        params.data = params.form.serialize();
         
         swal.fire({
             title:"Estas Seguro",
@@ -70,7 +70,11 @@ $(document).ready(function(){
             cancelButtonText:"Cancelar"
         }).then((result)=>{
             if(result.value){
-                EventAjax(params)
+                postAjax(params,function(response){
+                    var resp = JSON.stringify(response);
+                    $('.CuadroListas').html(response);
+                });
+
             } 
         });
     });
@@ -78,37 +82,33 @@ $(document).ready(function(){
     $('button[name$="-list"]').click(function(e){
         e.preventDefault();
         let params = new AjaxParams;
-        params.accion= $(this).data('action');        
+        params.accion= $(this).data('action')+"/ajax";        
         params.metodo= "POST";
-        params.dat = {controller:params.accion.split("/")[0]};
-
-        EventAjax(params);
+        params.data = {controller:params.accion.split("/")[0]};
+        postAjax(params,function(response){
+            var resp = JSON.stringify(response);
+            $('.CuadroListas').html(response);
+        });
+        
 
     });
-
-
-    function EventAjax(params){
-        console.log("params "+JSON.stringify(params));
-        $.ajax({
-            type: params.metodo,
-            data: params.dat,
-            url: params.accion,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function () {
-                $('.CuadroListas').html("<center><br><br><img src='../cartera/statics/images/cargando/cargando2.gif'><center>");
-            },
-            success: function (response) {
-                $('.CuadroListas').html(response);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                //debugger;
-                //alert(textStatus, errorThrown, jqXHR);
-            }
-        });
-    }
+   
+    function postAjax(p, success) {
+        var params = typeof p.data == 'string' ? p.data : Object.keys(p.data).map(
+                function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(p.data[k]) }
+            ).join('&');
     
+        var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        xhr.open('POST', p.accion);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
+        };
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(params);
+        return xhr;
+    }
+
     //////dashboard//////
 
     //window.setInterval(function () {

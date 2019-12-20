@@ -4,14 +4,16 @@ class CuentasController extends Controller {
 
     public function __construct(){
         parent::__construct();
-        $cuentasModel = new CuentasModel;
     }
 
     public function listarCuentas(){
+        $cuentasModel = new CuentasModel;
         echo "entreee";
+        $this->functions->dbg("linea 12 ".print_r($_POST),"ListarCuentas");
         if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
             $datos = $cuentasModel->getCuentas();
+            $this->functions->dbg("Datos ".print_r($datos)." en controller ".$_POST['controller'],"ListarCuentas");
             if( $datos != null ){
                 $lista = View::viewlist($_POST['controller'],$datos);
                 echo $lista;
@@ -26,10 +28,9 @@ class CuentasController extends Controller {
     }
 
     public function crearCuentas(){
-        $this->functions->dbg("Datos en crear","CuentasController.log");
-        if($this->is_post()){
-            $this->functions->dbg("Datos en crear ".json_encode($_REQUEST),"CuentasController.log");
-        }
+        //if($this->is_post()){
+            $this->functions->dbg("Datos ".print_r($_POST),"CrearCuentas");
+        //}
     }
 
 }
