@@ -93,7 +93,6 @@ class View extends Config{
     public function viewList($control_list,$datos=array()){
         $functions = new Functions;
         if(file_exists(self::LIST_PATH.$control_list.'List.php')){
-            $functions->dbg("28 existe list: ".self::LIST_PATH.$control_list.'List.php',"ViewList");
             $uri_list = self::LIST_PATH.$control_list."List.php";
             if(is_file($uri_list)){
                 ob_start();

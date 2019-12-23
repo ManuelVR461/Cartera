@@ -10,7 +10,7 @@ class CuentasController extends Controller {
         $cuentasModel = new CuentasModel;
         if($this->is_post()){
             //ojo: Crear funcion para limpiar contenido de post
-            $datos = $cuentasModel->getCuentas();
+            $datos = $cuentasModel->getAll();
             if( $datos != null ){
                 $lista = View::viewlist($_POST['controller'],$datos);
                 echo $lista;
@@ -27,9 +27,12 @@ class CuentasController extends Controller {
     public function crearCuentas(){
         if($this->is_post()){
             $cuentasModel = new CuentasModel;
-            $cuentasModel->setCuentas();
-            
-            //$this->functions->dbg("Datos ".print_r($_POST),"CrearCuentas");
+            $data = array('descripcion' => $_POST['txtcuenta'],
+                          'saldo_inicial' => $_POST['txtsaldo'],
+                          'signo_moneda' => '$',
+                          'fecha' => date('Y-m-d'));
+            $cuentasModel->set($data);
+            $this->listarCuentas();
         }
     }
 

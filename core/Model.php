@@ -55,9 +55,34 @@ class Model extends Config {
         return $output;
     }
 
-    /** Ejecuta una consulta y devuelve un resultado.
+
+    /** Extrae las lleves de un arreglo como una string separado por coma.
+	* @param Array $data		Arreglo de Datos.
+	* @return String        Cadena separada por coma
+    */
+    public function getKeysArray($data){
+        return implode(',',array_keys($data));
+    }
+
+    /** Extrae las lleves de un arreglo como una string separado por coma y : para sentencias preparadas.
+	* @param Array $data		Arreglo de Datos.
+	* @return String        Cadena separada por coma y dos puntos
+    */
+    public function getKeysArrayPDO($data){
+        $campos = implode(',',array_keys($data));
+        $campos = str_replace(",",",:",$campos);
+        return ":".$campos;
+    }
+
+    public function getFormatDataPDO($data){
+        foreach ($data as $key => $value) {
+            $dataout[":".$key]=$value;
+        }
+        return $dataout;
+    }
+
+    /** Ejecuta una consulta y devuelve UN SOLO resultado.
 	* @param String $sql		Texto de la consulta.
-	* @param String $dataBase	Nombre de la Base de datos a la cual se conectará, por defecto es la indicada en
 	* @return Array $result
 	*
 	*/
@@ -67,29 +92,46 @@ class Model extends Config {
         $res->execute($where);
         $row = $res->fetch(PDO::FETCH_ASSOC);
         $res->closeCursor();
-        $this->cnx = NULL;
 		$tf = microtime(true);
 		self::_log($ti,$tf,$sql,$row);
 		return $row;
     }
-    
-    /**
-	* Devuelve una array con TODOS los datos obtenidos de una consulta
-	* @param String $sql texto de la consulta.
-	* @param String $dataBase	Nombre de la Base de datos a la cual se conectará, por defecto es la indicada en
-	*							config_app.php en la constante DB_DEFAULT
-	* @return Array $data Array con los datos de la consulta realizada.
+
+    /** Ejecuta una consulta y devuelve TODOS los resultados.
+	* @param String $sql		Texto de la consulta.
+	* @return Array $result
+	*
 	*/
 	public function selectAll($sql,$where = array()){
-		$ti = microtime(true);
-		$query = $db->query($sql);
-		$data = '';
-		while($row=$db->getRow($query)){
-			$data[]=$row;
-		}
+        $ti = microtime(true);
+        $res = $this->cnx->prepare($sql);
+        $res->execute($where);
+        $row = $res->fetchALL(PDO::FETCH_ASSOC);
+        $res->closeCursor();
 		$tf = microtime(true);
-		self::_log($ti,$tf,$sql,$data);
-		return $data;
+		self::_log($ti,$tf,$sql,$row);
+		return $row;
+    }
+
+    /** reaiza una insercion.
+	* @param String $sql		Texto de la consulta.
+	* @return Int $lastid Ultimo id generado
+	*
+	*/
+	public function insert($sql,$data){
+        try {
+            $ti = microtime(true);
+            $res = $this->cnx->prepare($sql);
+            $res->execute($data);
+            $res->closeCursor();
+            $tf = microtime(true);
+            $lastid = $this->cnx->lastInsertId();
+            self::_log($ti,$tf,$sql,"Id: ".$lastid);
+            return $lastid;
+        } catch(PDOExecption $e) {
+            self::_log($ti,$tf,$sql,$sql,$e->getMessage());
+            return false;
+        }
     }
     
     /**
@@ -100,9 +142,10 @@ class Model extends Config {
 	* @param int	$tf			tiempo en microsegundos después de ejecutar la consulta
 	*/
 	private static function _log($ti=0,$tf=0,$consulta='',$resultado=null){
+        $funtions = new Functions;
 		$sep = '||';
-		$str = self::$_host.$sep.round($tf-$ti,2).$sep.$consulta.$sep.json_encode($resultado);
-		dbg($str,'debug_db_'.date('Ymd').'.log',DEBUG_DB);
+		$str = parent::URL.$sep.round($tf-$ti,2).$sep.$consulta.$sep.json_encode($resultado);
+		$funtions->dbg($str,'debug_db_',parent::DEBUG_DB);
     }
     
 }

@@ -37,11 +37,9 @@ class Router{
                     $this->via = $this->router[2];
                 }
             }
-
             
             $views = new View($this->controller,$this->method,$this->via);
-
-            
+                        
             if($this->router[0] !='logout'){                
                 $views->render();
             }else{

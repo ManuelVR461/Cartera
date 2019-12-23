@@ -55,10 +55,9 @@ $(document).ready(function(){
         params.form = $(this).parent('form');
         params.metodo= params.form.attr('method');
         params.mensaje = $(this).siblings('#msg-'+$(this).text()).val();
-        let formdata = new FormData(params.form[0]);
-        formdata.append('controller', params.accion.split("/")[0]);
         params.data = params.form.serialize();
-        
+        params.data = params.data+"&controller="+params.accion.split("/")[0];
+
         swal.fire({
             title:"Estas Seguro",
             text:params.mensaje,

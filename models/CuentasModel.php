@@ -5,23 +5,28 @@ class CuentasModel extends Model{
         parent::__construct();
     }
 
-    public function get_Cuentas(){
-        echo "Lista de Cuentas";
-        //return $data =array("cuenta"=>"prueba","saldo"=>5000);
-        //$sql = "SELECT * FROM cuentas WHERE 1";
-        //return $this->select($sql);
+    public function getAll(){
+        $sql = "SELECT * FROM cuentas";
+        return $this->selectAll($sql);
     }
 
-    public function set_Cuenta(){
-        echo "estoy en model";
-        print_r($_POST);
+    public function get($col,$where){
+        $sql = "SELECT ".$this->getKeysArray($data)." FROM cuentas ";
+        echo $sql .= "WHERE ".$this->getKeysArrayPDO($where);
+        //return $this->select($sql,$where);
     }
 
-    public function put_Cuenta(){
+    public function set($data){
+        $sql = "INSERT INTO cuentas (".$this->getKeysArray($data).")";
+        $sql .=" VALUES (".$this->getKeysArrayPDO($data).")";
+        return $this->insert($sql,$this->getFormatDataPDO($data));
+    }   
 
+    public function put($datos){
+        //print_r($_POST);
     }
 
-    public function del_Cuenta(){
+    public function del(){
 
     }
 
