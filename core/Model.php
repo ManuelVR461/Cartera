@@ -74,6 +74,25 @@ class Model extends Config {
     }
     
     /**
+	* Devuelve una array con TODOS los datos obtenidos de una consulta
+	* @param String $sql texto de la consulta.
+	* @param String $dataBase	Nombre de la Base de datos a la cual se conectará, por defecto es la indicada en
+	*							config_app.php en la constante DB_DEFAULT
+	* @return Array $data Array con los datos de la consulta realizada.
+	*/
+	public function selectAll($sql,$where = array()){
+		$ti = microtime(true);
+		$query = $db->query($sql);
+		$data = '';
+		while($row=$db->getRow($query)){
+			$data[]=$row;
+		}
+		$tf = microtime(true);
+		self::_log($ti,$tf,$sql,$data);
+		return $data;
+    }
+    
+    /**
 	* Graba log con datos de tiempo de ejecución de consulta
 	* @param string	$consulta	sentencia SQL ejecutada
 	* @param arry	$resultado	resultado de la sentencia ejecutada

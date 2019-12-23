@@ -587,6 +587,7 @@ fieldset{
   border: 1px solid grey;
   height:calc(80vh);
   background: #FFF;
+  vertical-align: top;
 }
 
 /* formularios template */
