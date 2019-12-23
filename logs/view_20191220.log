@@ -1,0 +1,4 @@
+0.009 [2019-12-20 18:14:10 8pjij6uq6rlqf1he9d5vf1le5p] via: "nav"
+0.009 [2019-12-20 18:14:10 8pjij6uq6rlqf1he9d5vf1le5p] existe view: ./views/cuentas.php
+0.009 [2019-12-20 18:14:10 8pjij6uq6rlqf1he9d5vf1le5p] 28 existe controller: ./controllers/CuentasController.php
+0.009 [2019-12-20 18:14:10 8pjij6uq6rlqf1he9d5vf1le5p] 51 no existe metodo: .php
