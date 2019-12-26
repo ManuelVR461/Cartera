@@ -6,6 +6,15 @@ class CuentasController extends Controller {
         parent::__construct();
     }
 
+    public function obtenerCuenta(){
+        if($this->is_get()){
+            $cuentasModel = new CuentasModel;
+            $data = array("id"=>$_GET['id']);
+            $datos = $cuentasModel->get($data);
+            echo json_encode($datos);
+        }
+    }
+
     public function listarCuentas(){
         $cuentasModel = new CuentasModel;
         if($this->is_post()){
@@ -34,6 +43,14 @@ class CuentasController extends Controller {
             $cuentasModel->set($data);
             $this->listarCuentas();
         }
+    }
+
+    public function borrarCuenta(){
+        $cuentasModel = new CuentasModel;
+        $data = array("id"=>$_GET['id']);
+        $datos = $cuentasModel->del($data);
+        $this->listarCuentas();
+        echo json_encode($datos);
     }
 
 }

@@ -598,6 +598,18 @@ fieldset{
   margin-bottom: -2px;
 }
 
+fieldset.fieldset-border {
+  margin-top: 20px;
+  border: 0px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+}
+
+legend.fieldset-border {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+}
+
 .header-list{
   background: #EFEFEF;
   padding: 5px;
@@ -606,4 +618,29 @@ fieldset{
 .btn-list{
   font-size: 12px;
   max-height: 28px;
+}
+.btn-list-item{
+  font-size: 10px;
+  max-height: 25px;
+}
+
+/*  tables */
+.col-idx{
+  width: 15px;
+  text-align: center;
+}
+.col-btn{
+  width: 100px;
+  text-align: center;
+}
+.col-sdo{
+  width: 100px;
+  text-align: right;
+}
+.table > thead{
+  font-weight: bold;
+}
+.table-title {
+  font-size: 14px;
+  font-weight: bold;
 }

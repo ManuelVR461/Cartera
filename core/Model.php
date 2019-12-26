@@ -81,6 +81,21 @@ class Model extends Config {
         return $dataout;
     }
 
+    /** Relaciona el campo de la tabla con el formulario
+	* @param Array $data	Datos extraidos de la consulta sql
+	* @return Array $combine_array
+	*/
+    protected function relationSchemaFormData($data,$schema){
+        $formText = $schema;
+        $array_flip = array_flip($formText);
+        foreach ($array_flip as $key => $value) {
+            if(array_key_exists($value,$data)){
+                $combine_array[$key]=$data[$value];
+            }
+        }
+        return $combine_array;
+    }
+
     /** Ejecuta una consulta y devuelve UN SOLO resultado.
 	* @param String $sql		Texto de la consulta.
 	* @return Array $result
@@ -92,7 +107,7 @@ class Model extends Config {
         $res->execute($where);
         $row = $res->fetch(PDO::FETCH_ASSOC);
         $res->closeCursor();
-		$tf = microtime(true);
+        $tf = microtime(true);
 		self::_log($ti,$tf,$sql,$row);
 		return $row;
     }
@@ -113,7 +128,7 @@ class Model extends Config {
 		return $row;
     }
 
-    /** reaiza una insercion.
+    /** reaiza una insercion y decuelve el ultimo id generado
 	* @param String $sql		Texto de la consulta.
 	* @return Int $lastid Ultimo id generado
 	*
@@ -124,14 +139,31 @@ class Model extends Config {
             $res = $this->cnx->prepare($sql);
             $res->execute($data);
             $res->closeCursor();
-            $tf = microtime(true);
             $lastid = $this->cnx->lastInsertId();
+            $tf = microtime(true);
             self::_log($ti,$tf,$sql,"Id: ".$lastid);
             return $lastid;
         } catch(PDOExecption $e) {
             self::_log($ti,$tf,$sql,$sql,$e->getMessage());
             return false;
         }
+    }
+
+
+    /** elimina un campo y devuelve el numero de filas afectadas
+	* @param String $sql		Texto de la consulta.
+	* @return Array $result
+	*
+	*/
+	public function delete($sql,$where = array()){
+        $ti = microtime(true);
+        $res = $this->cnx->prepare($sql);
+        $res->execute($where);
+        $rowcount = $res->rowCount();
+        $res->closeCursor();
+        $tf = microtime(true);
+		self::_log($ti,$tf,$sql,"Eliminados ". $rowcount);
+		return $rowcount;
     }
     
     /**

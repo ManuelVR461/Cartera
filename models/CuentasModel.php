@@ -1,6 +1,16 @@
 <?php
 
 class CuentasModel extends Model{
+    //Podriamos asignar los datos completos de estructura de la tabla para 
+    //hacer la validacion correcta
+    private $schema= array("id"=>"txtid",
+                           "descripcion"=>"txtcuenta",
+                           "saldo_inicial"=>"txtsaldo",
+                           "signo_moneda"=>"txtsimbolo",
+                           "fecha"=>"fecha",
+                           "status"=>"status");
+
+
     public function __construct(){
         parent::__construct();
     }
@@ -10,10 +20,12 @@ class CuentasModel extends Model{
         return $this->selectAll($sql);
     }
 
-    public function get($col,$where){
-        $sql = "SELECT ".$this->getKeysArray($data)." FROM cuentas ";
-        echo $sql .= "WHERE ".$this->getKeysArrayPDO($where);
-        //return $this->select($sql,$where);
+    public function get($where){
+        $sql = "SELECT * FROM cuentas ";
+        $sql .= "WHERE ".$this->getKeysArray($where);
+        $sql .= "=".$this->getKeysArrayPDO($where);
+        $data = $this->select($sql,$where);
+        return $this->relationSchemaFormData($data,$this->schema);
     }
 
     public function set($data){
@@ -26,8 +38,11 @@ class CuentasModel extends Model{
         //print_r($_POST);
     }
 
-    public function del(){
-
+    public function del($where){
+        $sql = "DELETE FROM cuentas ";
+        $sql .= "WHERE ".$this->getKeysArray($where);
+        $sql .= "=".$this->getKeysArrayPDO($where);
+        return $this->select($sql,$where);
     }
 
 }

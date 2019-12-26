@@ -85,20 +85,33 @@ $(document).ready(function(){
         params.metodo= "POST";
         params.data = {controller:params.accion.split("/")[0]};
         postAjax(params,function(response){
-            var resp = JSON.stringify(response);
             $('.CuadroListas').html(response);
         });
-        
-
     });
-   
+
+    $(document).on( "click", 'button[name$="-list-item"]',function(e) {
+        e.preventDefault();
+        let params = new AjaxParams;
+        params.accion= $(this).data('action')+"/ajax";        
+        params.data = {controller:params.accion.split("/")[0],
+                       id:$(this).data('id')};
+        getAjax(params,function(response){
+            let resp = jQuery.parseJSON(response);
+            for (const campo in resp) {
+                if ( $("#"+campo).length ) {
+                    $("#"+campo).val(resp[campo]);
+                }
+            }
+        });
+    });
+
     function postAjax(p, success) {
         var params = typeof p.data == 'string' ? p.data : Object.keys(p.data).map(
                 function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(p.data[k]) }
             ).join('&');
     
         var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-        xhr.open('POST', p.accion);
+        xhr.open(p.metodo, p.accion);
         xhr.onreadystatechange = function() {
             if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
         };
@@ -106,6 +119,12 @@ $(document).ready(function(){
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send(params);
         return xhr;
+    }
+
+    function getAjax(p,success){
+        jQuery.get(p.accion,p.data).done(function(data){
+            success(data);
+        })
     }
 
     //////dashboard//////

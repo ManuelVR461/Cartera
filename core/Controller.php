@@ -24,5 +24,9 @@ class Controller extends Config{
         $this->functions->dbg("datos post ".json_encode($_SERVER["REQUEST_METHOD"]),"Controller");
         return ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST) && !empty($_POST));
     }
+    function is_get(){
+        $this->functions->dbg("datos post ".json_encode($_SERVER["REQUEST_METHOD"]),"Controller");
+        return ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET) && !empty($_GET));
+    }
 
 }

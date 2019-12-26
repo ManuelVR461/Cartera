@@ -1,13 +1,12 @@
 <div class="table-responsive">
-<caption>Lista de Cuentas</caption>
-<table class="table table-sm" border="1">
+<label class="table-title">Lista de Cuentas</label>
+<table class="table table-sm" id="table-list">
     <thead>
         <tr>
-            <td></td>
-            <td>Nro</td>
+            <td class="col-idx">Nro</td>
             <td>Nombre</td>
-            <td>Saldo</td>
-            <td></td>
+            <td class="col-sdo">Saldo</td>
+            <td class="col-btn"></td>
         </tr>
     </thead>
     <tbody>
@@ -15,13 +14,12 @@
     foreach ($datos as $key => $cuenta) {
         ?>
         <tr>
-            <td></td>
-            <td><?php echo $cuenta['id']; ?></td>
+            <td class="col-idx"><?php echo $cuenta['id']; ?></td>
             <td><?php echo $cuenta['descripcion']; ?></td>
-            <td><?php echo $cuenta['saldo_inicial']." ".$cuenta['signo_moneda']; ?></td>
-            <td>
-                <button class="btn btn-success btn-list" name="btn-list" data-action="Cuentas/getCuenta" type="button">C</button>
-                <button class="btn btn-danger btn-list" name="btn-list" data-action="Cuentas/delCuenta" type="button">X</button>
+            <td class="col-sdo"><?php echo $cuenta['saldo_inicial']." ".$cuenta['signo_moneda']; ?></td>
+            <td class="col-btn">
+                <button class="btn btn-success btn-list-item" name="btn-list-item" data-id="<?php echo $cuenta['id']; ?>" data-action="Cuentas/obtenerCuenta" type="button">C</button>
+                <button class="btn btn-danger btn-list-item" name="btn-list-item" data-id="<?php echo $cuenta['id']; ?>" data-action="Cuentas/borrarCuenta" type="button">X</button>
             </td>
         </tr>
         <?php
