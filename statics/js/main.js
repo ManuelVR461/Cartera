@@ -52,30 +52,39 @@ $(document).ready(function(){
         e.preventDefault();
         let params = new AjaxParams;
         params.accion = $(this).data('action')+"/ajax";        
-        params.form = $(this).parent('form');
+        
+        let btn = params.accion.split("/")[1];
+        params.form = $(this).parents('form');
+
         params.metodo= params.form.attr('method');
         params.mensaje = $(this).siblings('#msg-'+$(this).text()).val();
         params.data = params.form.serialize();
         params.data = params.data+"&controller="+params.accion.split("/")[0];
+        console.log(params)
+        if(btn!=="Cancelar"){
+            swal.fire({
+                title:"Estas Seguro",
+                text:params.mensaje,
+                icon:"question",
+                showCancelButton:true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText:"Aceptar",
+                cancelButtonText:"Cancelar"
+            }).then((result)=>{
+                if(result.value){
+                    postAjax(params,function(response){
+                        var resp = JSON.stringify(response);
+                        $('.CuadroListas').html(response);
+                        $("button:contains('Modificar')").attr("data-action","Cuentas/crearCuenta").text("Guardar");
+                    });
 
-        swal.fire({
-            title:"Estas Seguro",
-            text:params.mensaje,
-            icon:"question",
-            showCancelButton:true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText:"Aceptar",
-            cancelButtonText:"Cancelar"
-        }).then((result)=>{
-            if(result.value){
-                postAjax(params,function(response){
-                    var resp = JSON.stringify(response);
-                    $('.CuadroListas').html(response);
-                });
-
-            } 
-        });
+                } 
+            });
+        }else{
+            $(".formAjax")[0].reset();
+            $("button:contains('Modificar')").attr("data-action","Cuentas/crearCuenta").text("Guardar");
+        }
     });
 
     $('button[name$="-list"]').click(function(e){
@@ -91,15 +100,25 @@ $(document).ready(function(){
 
     $(document).on( "click", 'button[name$="-list-item"]',function(e) {
         e.preventDefault();
+        let btn = $(this).text();
         let params = new AjaxParams;
+        let id = $(this).data('id');
         params.accion= $(this).data('action')+"/ajax";        
         params.data = {controller:params.accion.split("/")[0],
-                       id:$(this).data('id')};
+                       id:id};
         getAjax(params,function(response){
             let resp = jQuery.parseJSON(response);
-            for (const campo in resp) {
-                if ( $("#"+campo).length ) {
-                    $("#"+campo).val(resp[campo]);
+            if(btn==="C"){
+                for (const campo in resp) {
+                    if ( $("#"+campo).length ) {
+                        $("#"+campo).val(resp[campo]);
+                    }
+                }
+                $("button:contains('Guardar')").attr("data-action","Cuentas/modificarCuenta").text("Modificar");
+            }
+            if(btn==="X"){
+                if(resp > 0){
+                    $("tr#"+id).remove();
                 }
             }
         });

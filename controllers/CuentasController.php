@@ -10,7 +10,7 @@ class CuentasController extends Controller {
         if($this->is_get()){
             $cuentasModel = new CuentasModel;
             $data = array("id"=>$_GET['id']);
-            $datos = $cuentasModel->get($data);
+            $datos = $cuentasModel->getBy($data);
             echo json_encode($datos);
         }
     }
@@ -33,14 +33,27 @@ class CuentasController extends Controller {
         
     }
 
-    public function crearCuentas(){
+    public function crearCuenta(){
         if($this->is_post()){
             $cuentasModel = new CuentasModel;
             $data = array('descripcion' => $_POST['txtcuenta'],
                           'saldo_inicial' => $_POST['txtsaldo'],
-                          'signo_moneda' => '$',
+                          'signo_moneda' => $_POST['txtsimbolo'],
                           'fecha' => date('Y-m-d'));
             $cuentasModel->set($data);
+            $this->listarCuentas();
+        }
+    }
+
+    public function modificarCuenta(){
+        if($this->is_post()){
+            $cuentasModel = new CuentasModel;
+            $where = array('id'=>$_POST['txtid']);
+            $data = array('descripcion' => $_POST['txtcuenta'],
+                          'saldo_inicial' => $_POST['txtsaldo'],
+                          'signo_moneda' => $_POST['txtsimbolo'],
+                          'fecha' => date('Y-m-d'));
+            $cuentasModel->put($data,$where);
             $this->listarCuentas();
         }
     }

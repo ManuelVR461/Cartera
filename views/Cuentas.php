@@ -11,8 +11,12 @@
 							<input class="form-control text-right" type="text" name="txtsaldo" id="txtsaldo" placeholder="0.0" title="Saldo Inicial">
 							<input class="form-control text-right" type="text" name="txtsimbolo" id="txtsimbolo" placeholder="$" title="Simbolo Moneda">
 						</div>
-						<button class="btn btn-primary float-right" name="btn-form" data-action="Cuentas/crearCuentas" type="button">Guardar</button>
-						<input type="hidden" id="msg-Guardar" value="Se va a agregar una Cuenta Nueva">
+						<div class="form-group btns-form">
+							<button class="btn btn-primary" name="btn-form" data-action="Cuentas/crearCuenta" type="button">Guardar</button>
+							<button class="btn btn-success" name="btn-form" data-action="Cuentas/Cancelar" type="reset">Cancelar</button>
+							<input type="hidden" id="msg-Guardar" value="Se va a agregar una Cuenta Nueva">
+							<input type="hidden" id="msg-Modificar" value="Se va a actualizar los datos la Cuenta">
+						</div>
 						<input type="hidden" id="txtid" name="txtid" value="Se va a agregar una Cuenta Nueva">
 				</form>
 			</fieldset>

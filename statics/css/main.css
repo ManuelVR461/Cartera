@@ -584,7 +584,7 @@ fieldset{
 }
 
 .CuadroListas{
-  border: 1px solid grey;
+  border: 15px solid grey;
   height:calc(80vh);
   background: #FFF;
   vertical-align: top;
@@ -593,7 +593,7 @@ fieldset{
 /* formularios template */
 .form-content{
   margin-bottom: 10px;
-  background: #EFEFEF;
+  background: rgb(230, 248, 247);
   padding-top: 15px;
   margin-bottom: -2px;
 }
@@ -611,7 +611,7 @@ legend.fieldset-border {
 }
 
 .header-list{
-  background: #EFEFEF;
+  background: rgb(230, 248, 247);
   padding: 5px;
   margin-bottom: 1px;
 }
@@ -623,8 +623,14 @@ legend.fieldset-border {
   font-size: 10px;
   max-height: 25px;
 }
+.btns-form{
+  text-align: right;
+}
 
 /*  tables */
+.table-responsive{
+  margin: 20px;
+}
 .col-idx{
   width: 15px;
   text-align: center;

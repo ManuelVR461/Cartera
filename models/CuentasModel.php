@@ -20,10 +20,9 @@ class CuentasModel extends Model{
         return $this->selectAll($sql);
     }
 
-    public function get($where){
+    public function getBy($where){
         $sql = "SELECT * FROM cuentas ";
-        $sql .= "WHERE ".$this->getKeysArray($where);
-        $sql .= "=".$this->getKeysArrayPDO($where);
+        $sql .= "WHERE ".$this->getUpdateWhereDataPDO($where);
         $data = $this->select($sql,$where);
         return $this->relationSchemaFormData($data,$this->schema);
     }
@@ -34,15 +33,18 @@ class CuentasModel extends Model{
         return $this->insert($sql,$this->getFormatDataPDO($data));
     }   
 
-    public function put($datos){
-        //print_r($_POST);
+    public function put($datos,$where){
+        $sql = "UPDATE cuentas SET ";
+        $sql .= " ".$this->getUpdateWhereDataPDO($datos);
+        $sql .= " WHERE ".$this->getUpdateWhereDataPDO($where);
+        return $this->update($sql,$this->getFormatDataPDO($this->combineArrays($datos,$where)));
     }
 
     public function del($where){
         $sql = "DELETE FROM cuentas ";
         $sql .= "WHERE ".$this->getKeysArray($where);
         $sql .= "=".$this->getKeysArrayPDO($where);
-        return $this->select($sql,$where);
+        return $this->delete($sql,$where);
     }
 
 }

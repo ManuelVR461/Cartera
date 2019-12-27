@@ -56,7 +56,7 @@ class Model extends Config {
     }
 
 
-    /** Extrae las lleves de un arreglo como una string separado por coma.
+    /** Extrae las llaves de un arreglo como una string separado por coma.
 	* @param Array $data		Arreglo de Datos.
 	* @return String        Cadena separada por coma
     */
@@ -64,7 +64,16 @@ class Model extends Config {
         return implode(',',array_keys($data));
     }
 
-    /** Extrae las lleves de un arreglo como una string separado por coma y : para sentencias preparadas.
+    /** combina los arrays de datos y where para las sentencias preparadas
+	* @param Array $data		Arreglo de Datos.
+	* @return array        arrays combinados
+    */
+    public function combineArrays($data,$where){
+        return array_merge($data,$where);
+    }
+
+
+    /** Extrae las llaves de un arreglo como una string separado por coma y : para sentencias preparadas.
 	* @param Array $data		Arreglo de Datos.
 	* @return String        Cadena separada por coma y dos puntos
     */
@@ -74,11 +83,27 @@ class Model extends Config {
         return ":".$campos;
     }
 
+    /** actualiza los datos del arregle con :llave para sentencias preparadas.
+	* @param Array $data		Arreglo de Datos.
+	* @return Array        Arreglo con :llaves
+    */
     public function getFormatDataPDO($data){
         foreach ($data as $key => $value) {
             $dataout[":".$key]=$value;
         }
         return $dataout;
+    }
+
+    /** Estrae las llaves de un arreglo formateandola llave=:llave para actualizaciones 
+    * con Sentencias preparadas
+	* @param Array $data		Arreglo de Datos.
+	* @return String Cadena con llave=:llave,
+    */
+    public function getUpdateWhereDataPDO($data){
+        foreach ($data as $key => $value) {
+            $part[]=$key."=:".$key;
+        }
+        return implode(',',array_values($part));
     }
 
     /** Relaciona el campo de la tabla con el formulario
@@ -147,6 +172,22 @@ class Model extends Config {
             self::_log($ti,$tf,$sql,$sql,$e->getMessage());
             return false;
         }
+    }
+
+    /** actualiza un campo y devuelve el numero de filas afectadas
+	* @param String $sql		Texto de la consulta.
+	* @return Array $result
+	*
+	*/
+	public function update($sql,$where = array()){
+        $ti = microtime(true);
+        $res = $this->cnx->prepare($sql);
+        $res->execute($where);
+        $rowcount = $res->rowCount();
+        $res->closeCursor();
+        $tf = microtime(true);
+		self::_log($ti,$tf,$sql,"actualizados ". $rowcount);
+		return $rowcount;
     }
 
 

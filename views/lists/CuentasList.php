@@ -11,10 +11,11 @@
     </thead>
     <tbody>
     <?php
+    $idx=1;
     foreach ($datos as $key => $cuenta) {
         ?>
-        <tr>
-            <td class="col-idx"><?php echo $cuenta['id']; ?></td>
+        <tr id="<?php echo $cuenta['id']; ?>">
+            <td class="col-idx"><?php echo $idx++; ?></td>
             <td><?php echo $cuenta['descripcion']; ?></td>
             <td class="col-sdo"><?php echo $cuenta['saldo_inicial']." ".$cuenta['signo_moneda']; ?></td>
             <td class="col-btn">
