@@ -56,32 +56,22 @@ class View extends Config{
             $functions->dbg("existe view: ".self::VIEW_PATH.$view.'.php',"View");
             if(file_exists(self::CONTROLLER_PATH.$controller.'.php')){
                 $functions->dbg("28 existe controller: ".self::CONTROLLER_PATH.$controller.'.php',"View");
-
-
                 $ViewController = new $controller();
-
                 if(isset($this->method)){
-
                     $functions->dbg("38 existe metodo: ".$this->method,"View");
                     if(method_exists($ViewController,$this->method)){
-
                         $functions->dbg("43 existe controlador y metodo entonces cargo el objeto ","View");
                         $ViewController->{$this->method}();
-
                     }else{
                         echo "<br><br><br><h1>Error no existe el metodo</h1>";
                     }
-
                 }else{
                     $functions->dbg("51 no existe metodo: ".$this->method.'.php',"View");
                     require_once( self::VIEW_PATH.$view.'.php');
                 }
-
-
-
             }else{
-                 $functions->dbg("55 no existe controller: ".self::CONTROLLER_PATH.$controller.'.php',"View");
-                 //require_once(self::VIEW_PATH.$view.'.php');
+                $functions->dbg("55 no existe controller: ".self::CONTROLLER_PATH.$controller.'.php',"View");
+                require_once(self::VIEW_PATH.$view.'.php');
             }
 
 
