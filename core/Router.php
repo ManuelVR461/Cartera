@@ -50,7 +50,7 @@ class Router{
             }
             
         }else{
-
+            $functions->dbg("Router: 51 ingreso ". $_SESSION['datalogin']['ingreso'],"Router");
             if(!isset($_POST['user']) && !isset($_POST['pwd'])){
                 $login_form = new View('login');
                 $login_form->render();
@@ -65,7 +65,6 @@ class Router{
                     header('Location: ./?error=El usuario '.$_POST['user'].' y el password son incorrectos');
                 }else{
                     $_SESSION['datalogin'] = $session;
-                    //echo json_encode((object) $session);
                     header('Location: ./');
                 }
             }
@@ -73,8 +72,4 @@ class Router{
         }
     }
 
-
-    public function __destruct(){
-     
-    }
 }

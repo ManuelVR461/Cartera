@@ -57,6 +57,7 @@ class View extends Config{
             if(file_exists(self::CONTROLLER_PATH.$controller.'.php')){
                 $functions->dbg("28 existe controller: ".self::CONTROLLER_PATH.$controller.'.php',"View");
                 $ViewController = new $controller();
+                $functions->dbg("30 comprobar si existe metodo:  ".$this->method.'.php',"View");
                 if(isset($this->method)){
                     $functions->dbg("38 existe metodo: ".$this->method,"View");
                     if(method_exists($ViewController,$this->method)){

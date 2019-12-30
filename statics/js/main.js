@@ -60,7 +60,6 @@ $(document).ready(function(){
         params.mensaje = $(this).siblings('#msg-'+$(this).text()).val();
         params.data = params.form.serialize();
         params.data = params.data+"&controller="+params.accion.split("/")[0];
-        console.log(params)
         if(btn!=="Cancelar"){
             swal.fire({
                 title:"Estas Seguro",
@@ -146,6 +145,51 @@ $(document).ready(function(){
         })
     }
 
+    function load(n,type="success",msg=undefined){
+        if(msg===undefined){
+            msg="<div style='text-align:center;'><h1 style='padding-top:10px;'>Espere por favor...</h1><br><img src='./statics/images/cargando/cargando3.gif' style='width:100px;padding-bottom:20px;' /></div>";
+        }else{
+            msg="<div style='text-align:center;'><h1 style='padding-top:10px;'>"+msg.substr(0,1).toUpperCase()+msg.substr(1)+"</h1><br><img src='./statics/images/cargando/cargando3.gif' style='width:100px;padding-bottom:20px;' /></div>";
+        }
+
+        let css = {background:"#28a745"};
+
+        switch(type){
+            case "success":
+                css = {background:"#28a745","border-radius":"10px"};
+            break;
+            case "warning":
+                css = {background:"#ffc107","border-radius":"10px"};
+            break;
+            case "info":
+                css = {background:"#17a2b8","border-radius":"10px"};
+            break;
+            case "danger":
+                css = {background:"#dc3545","border-radius":"10px"};
+            break;
+            case "primary":
+                css = {background:"#007bff","border-radius":"10px"};
+            break;
+            case "secundary":
+                css = {background:"#6c757d","border-radius":"10px"};
+            break;
+            default:
+                css = {background:"#28a745","border-radius":"10px"};
+            break;
+        } 
+        
+        css.color = "#fff";
+
+        if(n===1){
+            $('div.wrapper').block({ 
+                message: msg, 
+                css: css
+            });
+        }
+        if(n==0){
+            $('div.wrapper').unblock(); 
+        }
+    }
     //////dashboard//////
 
     //window.setInterval(function () {

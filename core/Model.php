@@ -8,6 +8,7 @@ class Model extends Config {
         parent::__construct();
         $this->cnx = $this->conexion();
     }
+
     /**
      * Metodo protegido para la abrir la base de datos
      *
@@ -25,6 +26,8 @@ class Model extends Config {
             die();
         }
     }
+
+
     /**
      * encrypter
      * Funcion para Encryptar las claves de Accesos
